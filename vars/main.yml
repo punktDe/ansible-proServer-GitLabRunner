@@ -1,0 +1,7 @@
+---
+gitlab_runner_defaults:
+  user: gitlab-runner
+  home: /home/gitlab-runner
+  version: v1.11.1
+  version_checksum: "sha1:ee4d3857450dcdc1deefd7997c7b8cec36a6cdad"
+  known_hosts: []
