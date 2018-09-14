@@ -31,9 +31,8 @@
         home: "{{ gitlab_runner.home }}"
         shell: /usr/local/bin/bash
         generate_ssh_key: true
-        ssh_key_file: .ssh/id_rsa
-        ssh_key_type: rsa
-        ssh_key_bits: 4096
+        ssh_key_file: .ssh/id_ed25519
+        ssh_key_type: ed25519
         ssh_key_comment: "{{ gitlab_runner.user }}@{{ ansible_nodename }}"
 
     - name: GitLab Runner known_hosts are up-to-date
@@ -45,7 +44,7 @@
 
     - name: Public key of GitLab Runner user is downloaded
       fetch:
-        src: "{{ gitlab_runner.home }}/.ssh/id_rsa.pub"
+        src: "{{ gitlab_runner.home }}/.ssh/id_ed25519.pub"
         dest: "{{ playbook_dir }}/{{ gitlab_runner.user }}@{{ ansible_nodename }}.pub"
         flat: yes
 
