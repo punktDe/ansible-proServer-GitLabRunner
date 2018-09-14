@@ -9,8 +9,6 @@
   with_items:
     - user
     - home
-    - version
-    - version_checksum
     - ci_url
     - registration_token
     - known_hosts
@@ -42,22 +40,6 @@
 - debug:
     msg: "Attention: GitLab requires deployment key in '{{ role_path }}/files/public_keys/{{ ansible_nodename }}__{{ gitlab_runner.user }}.pub' for this runner!"
 
-- name: GitLab Runner bin directory exists
-  file:
-    path: "{{ gitlab_runner.home }}/bin"
-    owner: "{{ gitlab_runner.user }}"
-    group: "{{ gitlab_runner.user }}"
-    state: directory
-
-- name: GitLab Runner is downloaded
-  get_url:
-    url: "https://gitlab-ci-multi-runner-downloads.s3.amazonaws.com/{{ gitlab_runner.version }}/binaries/gitlab-ci-multi-runner-freebsd-amd64"
-    checksum: "{{ gitlab_runner.version_checksum }}"
-    dest: "{{ gitlab_runner.home }}/bin/gitlab-ci-multi-runner"
-    owner: "{{ gitlab_runner.user }}"
-    group: "{{ gitlab_runner.user }}"
-    mode: "0755"
-
 - name: GitLab Runner log file exists
   copy:
     content: ""
@@ -69,7 +51,7 @@
 - name: GitLab Runner is registered
   command: >
     sudo -i -u {{ gitlab_runner.user|quote }} --
-    {{ gitlab_runner.home|quote }}/bin/gitlab-ci-multi-runner register
+    /usr/local/bin/gitlab-runner register
       --non-interactive
       --description {{ gitlab_runner.user|quote }}@{{ ansible_nodename|quote }}
       --config {{ gitlab_runner.home }}/.gitlab-runner/config.toml
@@ -82,12 +64,10 @@
     - Restart GitLab Runner
 
 - name: GitLab Runner service is configured
-  copy:
-    src: gitlab_runner.rc
-    dest: /etc/rc.d/gitlab_runner
-    owner: root
-    group: wheel
-    mode: "0755"
+  lineinfile:
+    dest: /etc/rc.conf
+    regexp: ^gitlab_runner_dir=
+    line: gitlab_runner_dir="{{ gitlab_runner.home }}"
   notify:
     - Restart GitLab Runner
 
