@@ -5,7 +5,7 @@
   vars:
     gitlab_runner:
       user: gitlab-runner
-      home: /home/gitlab-runner
+      home: /var/gitlab-runner
       known_hosts: []
       ci_url: "{{ gitlab_url }}"
       registration_token: "{{ gitlab_runner_registration_token }}"
