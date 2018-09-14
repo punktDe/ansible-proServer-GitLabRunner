@@ -1,5 +1,0 @@
----
-gitlab_runner_defaults:
-  user: gitlab-runner
-  home: /home/gitlab-runner
-  known_hosts: []

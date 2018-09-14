@@ -1,17 +1,14 @@
 # proServer-GitLab-Runner
 
-Ansible role to provision GitLab Runner on a proServer.
+Ansible playbook to configure GitLab Runner on a proServer.
 
 ## Requirements
 
 - Ansible >=2.3
 - A proServer
 
-## Configuration
+## Usage example
 
-```yml
----
-gitlab_runner:
-  ci_url: "https://gitlab.example.com/ci"
-  registration_token: ReGiStRaTiOnToKeN
+```
+ansible-playbook gitlab_runner.yaml -e gitlab_url=https://gitlab.example.com -e gitlab_runner_registration_token=ReGiStRaTiOnToKeN -i ~/my-ansible-project/inventory.ini --ask-vault-pass --limit testing
 ```
