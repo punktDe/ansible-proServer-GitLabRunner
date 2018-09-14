@@ -6,7 +6,7 @@
     gitlab_runner:
       user: gitlab-runner
       home: /var/gitlab-runner
-      known_hosts: []
+      known_hosts: "{{ known_hosts.split(',') if known_hosts|default(false, true) else [] }}"
       ci_url: "{{ gitlab_url }}"
       registration_token: "{{ gitlab_runner_registration_token }}"
   handlers:

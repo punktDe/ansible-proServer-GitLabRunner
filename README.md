@@ -10,5 +10,5 @@ Ansible playbook to configure GitLab Runner on a proServer.
 ## Usage example
 
 ```
-ansible-playbook gitlab_runner.yaml -e gitlab_url=https://gitlab.example.com -e gitlab_runner_registration_token=ReGiStRaTiOnToKeN -i ~/my-ansible-project/inventory.ini --ask-vault-pass --limit testing
+ansible-playbook gitlab_runner.yaml -e gitlab_url=https://gitlab.example.com -e gitlab_runner_registration_token=ReGiStRaTiOnToKeN -e known_hosts=github.com,gitlab.pluspunkthosting.de -i ~/my-ansible-project/inventory.ini --ask-vault-pass --limit testing
 ```
